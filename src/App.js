@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 import { Board } from "./components/Board/index";
+import { ScoreBoard } from "./components/ScoreBoard";
 
 function App() {
   // Define Win Conditions
@@ -23,6 +24,8 @@ function App() {
   // State of Player X, Player X always start game
   const [xPlayerPlaying, setXPlayerPlaying] = useState(true);
 
+  const [score, setScore] = useState({ xScore: 0, oScore: 0 });
+
   // Determine which box clicked
   const handleBoxClick = (boxIndx) => {
     const updatedBoard = board.map((value, indx) => {
@@ -34,7 +37,19 @@ function App() {
     });
 
     //Check winner after updated board
-    checkWinner(updatedBoard);
+    const winner = checkWinner(updatedBoard);
+
+    if (winner) {
+      if (winner === "O") {
+        let { oScore } = score;
+        oScore += 1;
+        setScore({ ...score, oScore });
+      } else {
+        let { xScore } = score;
+        xScore += 1;
+        setScore({ ...score, xScore });
+      }
+    }
 
     // Once board updated, update board variable
     setBoard(updatedBoard);
@@ -57,6 +72,7 @@ function App() {
 
   return (
     <div className="App">
+      <ScoreBoard score={score} xPlayerPlaying={xPlayerPlaying} />
       <Board board={board} onClick={handleBoxClick} />
     </div>
   );
