@@ -4,6 +4,7 @@ import "./App.css";
 
 import { Board } from "./components/Board/index";
 import { ScoreBoard } from "./components/ScoreBoard";
+import { ResetButton } from "./components/ResetButton";
 
 function App() {
   // Define Win Conditions
@@ -25,6 +26,8 @@ function App() {
   const [xPlayerPlaying, setXPlayerPlaying] = useState(true);
 
   const [score, setScore] = useState({ xScore: 0, oScore: 0 });
+
+  const [gameOver, setGameOver] = useState(false);
 
   // Determine which box clicked
   const handleBoxClick = (boxIndx) => {
@@ -64,16 +67,24 @@ function App() {
       const [x, y, z] = WIN_CONDITIONS[i];
 
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
-        console.log(board[x]);
+        setGameOver(true);
         return board[x];
       }
     }
   };
 
+  // Reset values of list when game is over
+  const resetBoard = () => {
+    setGameOver(false);
+    setBoard(Array(9).fill(null));
+  };
+
   return (
     <div className="App">
+      <h1>Tik-Tac-Toe</h1>
       <ScoreBoard score={score} xPlayerPlaying={xPlayerPlaying} />
-      <Board board={board} onClick={handleBoxClick} />
+      <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />
+      <ResetButton resetBoard={resetBoard} />
     </div>
   );
 }

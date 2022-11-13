@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 4rem;
+  color: rgb(52, 79, 235);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
