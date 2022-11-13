@@ -9,7 +9,9 @@ export const Board = ({ board, onClick }) => {
     <div className="board">
       {/* iterate through list*/}
       {board.map((value, indx) => {
-        return <Box value={value} onClick={() => onClick(indx)} />;
+        return (
+          <Box value={value} onClick={() => value === null && onClick(indx)} />
+        );
       })}
     </div>
   );
